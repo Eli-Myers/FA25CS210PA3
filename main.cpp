@@ -124,23 +124,31 @@ bool dfs(int r, int c,
          vector<vector<int>>& parent_c,
          int exit_r, int exit_c){
 
+    //checking if r and c is exit
     if (r == exit_r && c == exit_c) {
         return true;
     }
+    //marking visited
     visited[r][c] = true;
+
     for (int i = 0; i < 4; i++) {
+        //exploring neighbors
         int newRow = r + dr[i];
         int newCol = c + dc[i];
 
-
-        if (newRow != -1 && newCol != -1 && !visited[newRow][newCol] && maze[newRow][newCol] != 1) {
+        //out of bounds, wall, and visited checks
+        if (newRow >= 0 && newRow < maze.size() && newCol >= 0 && newCol < maze[0].size() && !visited[newRow][newCol] && maze[newRow][newCol] != 1) {
+            //assigning parent
             parent_r[newRow][newCol] = r;
             parent_c[newRow][newCol] = c;
+
             if (dfs(newRow, newCol, maze, visited, parent_r, parent_c, exit_r, exit_c)) {
+                //returning true when exit is found
                 return true;
             }
         }
     }
+    //false if no exit
     return false;
 }
 
